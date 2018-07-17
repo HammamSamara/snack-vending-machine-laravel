@@ -100,7 +100,5 @@ APIs  :
 - DELETE == snackvendingmachine.test/snacks/{id}  // delete
 - GET  ==== snackvendingmachine.test/snacks/{id}/edit  // edit
 
-### Features
-
 
 
