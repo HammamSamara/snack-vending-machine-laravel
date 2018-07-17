@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\CodeNotFound;
 use App\Exceptions\InsufficientChange;
 use App\Constants\Message;
+use App\Exceptions\InvalidMoneyInsertion;
 use Illuminate\Http\Request;
 use App\Snack;
 use App\VendingMachine;
@@ -14,6 +15,8 @@ use Exception;
 
 define('ORDER_FAILED', 'FAILED_INSUFF_CHANGE');
 define('ORDER_SUCCEEDED','SUCCESS');
+define('MAX_PER_INSERTION',20);
+define('MAX_PER_TRANSACTION',50);
 class VendingMachineController extends Controller
 {
 
@@ -53,9 +56,15 @@ class VendingMachineController extends Controller
         $this->validate(request(), [
             'amount' => 'numeric']);
 
+        if($request->amount > MAX_PER_INSERTION)
+            // You can insert up to $20 per time
+            throw new InvalidMoneyInsertion(Message::INVALID_MONEY);
         if ($request->amount > 0) {
             // updating current user's balance in the machine
             $this->vendingMachine->inserted_money += $request->amount;
+            if($this->vendingMachine->inserted_money > MAX_PER_TRANSACTION)
+                // The total balance must not exceed $50
+                throw new InvalidMoneyInsertion(Message::MONEY_OVERFLOW);
             $this->vendingMachine->dispensed_change = 0;
             $this->vendingMachine->save();
 
