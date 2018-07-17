@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\CodeNotFound;
 use App\Exceptions\InsufficientChange;
-use App\Message;
+use App\Constants\Message;
 use Illuminate\Http\Request;
 use App\Snack;
 use App\VendingMachine;
 use App\Order;
 use function Sodium\compare;
-
+use Exception;
 
 define('ORDER_FAILED', 'FAILED_INSUFF_CHANGE');
 define('ORDER_SUCCEEDED','SUCCESS');
@@ -38,7 +38,6 @@ class VendingMachineController extends Controller
     {
         $snacks = Snack::availableSnacks()->get()->toArray();
         $vendingMachine = $this->vendingMachine;
-        $vendingMachine->dispensed_change = 0;
         $vendingMachine->save();
         $message = $vendingMachine->message;
         return view('VendingMachine', compact('snacks', 'vendingMachine','message'));
@@ -70,10 +69,12 @@ class VendingMachineController extends Controller
     {
         $this->validate(request(), [
             'code' => 'string']);
-        $snack = Snack::findByCode($request->code);
-
-        if(!$snack->code)
+        $snack = null;
+        try{
+            $snack = Snack::findByCode($request->code);
+        }catch (Exception $e){
             throw new CodeNotFound();
+        }
 
         // checks if there is available change to return before making teh transaction
 
@@ -94,7 +95,7 @@ class VendingMachineController extends Controller
         if($isSufficient) {
             // add a new order with status succeeded
             Order::addOrder($snack, ORDER_SUCCEEDED);
-
+            //dd($this->vendingMachine);
             // remove the snack and vend it
             $this->vendingMachine->vendSnack($snack);
         }

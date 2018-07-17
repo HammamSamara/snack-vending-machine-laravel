@@ -1,5 +1,5 @@
 <?php namespace App\Exceptions;
-use App\Message;
+use App\Constants\Message;
 use Exception;
 
 class CodeNotFound extends Exception

@@ -64,13 +64,12 @@
                 <div style="text-align: center">
                     <button type="submit" class="btn btn-outline-primary">Buy</button>
                 </div>
+
+                <div style="width:200px; margin: auto ;border: 1px solid gray; background-color: lightgray; border-radius: 5px; margin-top: 200px">
+                    <span style="display: block; text-align: center">Change</span>
+                    <span style="display: block; text-align: center">{{$vendingMachine['dispensed_change']}}</span>
+                </div>
             </form>
-
-
-            <div style="width:200px; margin: auto ;border: 1px solid gray; background-color: lightgray; border-radius: 5px; margin-top: 200px">
-                <span style="display: block; text-align: center">Change</span>
-                <span style="display: block; text-align: center">{{$vendingMachine['dispensed_change']}}</span>
-            </div>
         </div>
     </div>
 

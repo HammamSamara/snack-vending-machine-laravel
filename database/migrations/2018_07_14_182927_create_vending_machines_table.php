@@ -15,7 +15,6 @@ class CreateVendingMachinesTable extends Migration
     {
         Schema::create('vending_machines', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('total_profit',8,2);
             $table->decimal('inserted_money',5,2);
             $table->decimal('available_change',8,2);
             $table->decimal('dispensed_change',8,2);

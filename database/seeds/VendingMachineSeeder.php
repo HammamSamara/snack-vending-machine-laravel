@@ -17,7 +17,6 @@ class VendingMachineSeeder extends Seeder
         DB::table('vending_machines')->insert([
             [
                 'id'=>'1',
-                'total_profit' => 0,
                 'available_change' => 80.0,
                 'dispensed_change' => 0.0,
                 'inserted_money' => 0.0,
