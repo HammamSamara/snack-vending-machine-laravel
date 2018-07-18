@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Snack;
+use Illuminate\Http\Request;
 
 class SnackController extends Controller
 {
@@ -15,10 +15,12 @@ class SnackController extends Controller
     public function index()
     {
         $snacks = Snack::availableSnacks()->get()->toArray();
+
         return response()->json([
-            'results' => $snacks
+            'results' => $snacks,
         ]);
     }
+
     public function create()
     {
         return view('create');
@@ -32,14 +34,15 @@ class SnackController extends Controller
         ];
 
         $snacks = Snack::where($match)->orderBy('name')->get();
+
         return response()->json([
-            'results' => $snacks
+            'results' => $snacks,
         ]);
     }
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,34 +51,39 @@ class SnackController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'price' => 'required|numeric',
-            'quantity' => 'required|numeric'
+            'quantity' => 'required|numeric',
         ]);
+
+        // #NOTE You could use mass assignment to fill the Snack Model
         $Snack = new Snack();
         $Snack->name = $request->get('name');
         $Snack->price = $request->get('price');
         $Snack->quantity = $request->get('quantity');
         $Snack->is_available = ($Snack->quantity > 0) ? 1 : 0;
-       // dd($Snack);
+
         $Snack->save();
 
-        return redirect('snacks')->with('success','Snack has been updated');
+        return redirect('snacks')->with('success', 'Snack has been updated');
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $snack = Snack::find($id);
-        return view('edit',compact('snack'));
+
+        return view('edit', compact('snack'));
     }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -83,26 +91,29 @@ class SnackController extends Controller
         $Snack = Snack::find($id);
         $this->validate(request(), [
             'name' => 'required',
-            'price' => 'required|numeric'
+            'price' => 'required|numeric',
         ]);
+
         $Snack->name = $request->get('name');
         $Snack->price = $request->get('price');
         $Snack->quantity = $request->get('quantity');
         $Snack->is_available = ($Snack->quantity > 0) ? 1 : 0;
         $Snack->save();
 
-        return redirect('snacks')->with('success','Snack has been updated');
+        return redirect('snacks')->with('success', 'Snack has been updated');
     }
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $Snack = Snack::find($id);
         $Snack->delete();
-        return redirect('snacks')->with('success','Snack has been  deleted');
+
+        return redirect('snacks')->with('success', 'Snack has been  deleted');
     }
 }

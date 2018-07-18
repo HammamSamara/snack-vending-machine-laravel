@@ -20,7 +20,7 @@ class OrderController extends Controller
     public function index()
     {
         return response()->json([
-            'results' => $this->ordersRepo->allOrders()
+            'results' => $this->ordersRepo->allOrders(),
         ]);
     }
 
@@ -28,54 +28,56 @@ class OrderController extends Controller
     public function getTodaysOrders()
     {
         return response()->json([
-            'results' => $this->ordersRepo->getTodaysOrders()
+            'results' => $this->ordersRepo->getTodaysOrders(),
         ]);
     }
 
     // get finalized orders
-    public function getSucceededOrders(){
+    public function getSucceededOrders()
+    {
 
         return response()->json([
-            'results' => $this->ordersRepo->getSucceededOrders()
+            'results' => $this->ordersRepo->getSucceededOrders(),
         ]);
     }
 
     public function getTodaysSucceededOrders()
     {
         return response()->json([
-            'results' => $this->ordersRepo->getTodaysSucceededOrders()
+            'results' => $this->ordersRepo->getTodaysSucceededOrders(),
         ]);
     }
 
         // avg sale per day
-    public function getTodaysAvgSalePerDay(){
+    public function getTodaysAvgSalePerDay()
+    {
         return response()->json([
-            'results' => $this->ordersRepo->getTodaysAvgSalePerDay()
+            'results' => $this->ordersRepo->getTodaysAvgSalePerDay(),
         ]);
     }
 
 
     // Sale of each snack type
-    public function totalSalePerSnack(){
+    public function totalSalePerSnack()
+    {
         return response()->json([
-            'results' => $this->ordersRepo->totalSalePerSnack()
+            'results' => $this->ordersRepo->totalSalePerSnack(),
         ]);
     }
 
     // Top three bought snacks
-    public function mostPopularSnack(){
+    public function mostPopularSnack()
+    {
         return response()->json([
-            'results' => $this->ordersRepo->mostPopularSnack()
+            'results' => $this->ordersRepo->mostPopularSnack(),
         ]);
     }
 
     // total sales
-    public function totalSales(){
+    public function totalSales()
+    {
         return response()->json([
-            'results' => $this->ordersRepo->totalSales()
+            'results' => $this->ordersRepo->totalSales(),
         ]);
-
     }
-
-
 }

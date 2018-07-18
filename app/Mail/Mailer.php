@@ -11,12 +11,13 @@ class Mailer extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $message;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    private $message;
     public function __construct($message)
     {
        // message sent in the email
@@ -32,8 +33,8 @@ class Mailer extends Mailable
     {
 
         $content =$this->message;
+
         return $this->from('vendingmachine@test.com')
             ->view('sendemail', compact('content'));
     }
-
 }

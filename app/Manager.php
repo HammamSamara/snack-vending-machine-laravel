@@ -27,9 +27,11 @@ class Manager extends Model
         if (!isset(self::$instance)) {
             self::$instance = Manager::find(1)->first();
         }
+
         return self::$instance;
     }
 
+    // #NOTE Usually manager, manages one or more vending machines but not a big of a deal
     public function vendingMachine()
     {
         return $this->belongsTo(VendingMachine::class);

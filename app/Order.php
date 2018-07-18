@@ -20,11 +20,13 @@ class Order extends Model
     }
 
     // adding a new order in both cases transaction success or failure
+    // #NOTE This is the order repo job to register orders
     public static function addOrder($snack, $status){
         $order = new Order();
         $order->status = $status;
         $order->snack_id = $snack->id;
         $order->price = $snack->price;
+        // #NOTE or just $order->save();
         Order::insert($order->attributesToArray());
     }
 }

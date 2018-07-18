@@ -10,8 +10,6 @@ class Snack extends Model
 
     protected $guarded = ['id', 'is_available', 'quantity'];
 
-
-
     public function scopeAvailableSnacks($query)
     {
         return $query->where('is_available', 1);
@@ -19,7 +17,7 @@ class Snack extends Model
 
     public function scopeFindByCode($query, $name)
     {
-       return $query->where('code', $name)->firstOrFail();
+        return $query->where('code', $name)->firstOrFail();
     }
 
     public function order()
